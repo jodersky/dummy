@@ -1,0 +1,4 @@
+build:
+  image: jodersky/ci
+  commands:
+    sbt ++2.11.8 test
