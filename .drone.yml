@@ -1,4 +1,16 @@
 build:
-  image: jodersky/ci:0.1
-  commands:
-    - sbt ++2.11.8 test
+  unit_tests:
+    image: jodersky/ci:0.1
+    commands:
+      - sbt +test
+
+  publish:
+    when:
+      event: push
+      success: true
+    environment:
+      GPG_SSB: "$$GPG_SSB"
+      BINTRAY_KEY: "$$BINTRAY_KEY"
+    commands:
+      - .drone/authenv.sh
+      - sbt +publishSigned
