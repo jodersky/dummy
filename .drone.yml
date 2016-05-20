@@ -10,6 +10,7 @@ build:
       event: push
       success: true
     environment:
+      NEWLINE: "$$NEWLINE"
       GPG_SSB: "$$GPG_SSB"
       BINTRAY_KEY: "$$BINTRAY_KEY"
     commands:
