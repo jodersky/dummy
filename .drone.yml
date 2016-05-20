@@ -1,6 +1,6 @@
 build:
+  image: jodersky/ci:0.1
   unit_tests:
-    image: jodersky/ci:0.1
     commands:
       - sbt +test
 
