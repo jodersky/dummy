@@ -1,10 +1,11 @@
 build:
-  image: jodersky/ci:0.1
   unit_tests:
+    image: jodersky/ci:0.1
     commands:
       - sbt +test
 
   publish:
+    image: jodersky/ci:0.1
     when:
       event: push
       success: true
