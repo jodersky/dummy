@@ -10,9 +10,13 @@ set -e
 echo "Getting public key"
 gpg2 --batch --keyserver hkp://pool.sks-keyservers.net --recv-keys 4E7DA7B5A0F86992D6EB3F514601878662E33372
 
-# import secret signing sub key, the key is expected to be passwordless
+# import secret signing sub key
+#
+# although the key is encrypted as a drone secret, it must also be encrypted
+# with a passphrase since gpg2 does not allow exporting keys with empty passwords
+# https://bugs.gnupg.org/gnupg/issue2070
 echo "Importing SSB"
-echo "$GPG_SSB" | gpg2 --batch --import
+echo "$GPG_SSB" | gpg2 --batch --passphrase=0000000000 --import
 
 # prepare gpg settings for sbt
 echo "Setting up sbt-pgp"
