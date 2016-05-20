@@ -7,12 +7,12 @@
 set -e
 
 # import public key from key servers
-gpg2 --key-server hkp://pool.sks-keyservers.net --recv-keys 4E7DA7B5A0F86992D6EB3F514601878662E33372
+gpg2 --batch --keyserver hkp://pool.sks-keyservers.net --recv-keys 4E7DA7B5A0F86992D6EB3F514601878662E33372
 
 # import secret signing sub key
 #
 # this block contains only an encrypted secret subkey used for signing
-gpg2 --passphrase="$GPG_PASSPHRASE"--import <<EOF
+gpg2 --batch --passphrase="$GPG_PASSPHRASE" --import <<EOF
 -----BEGIN PGP PRIVATE KEY BLOCK-----
 Version: GnuPG v2
 
@@ -120,7 +120,7 @@ sU1EEDM5bH5WwOQfH68mpVRHRzJ4YS59Rt3poStGO5b0h1lvln5TzVwKqAIt777c
 EOF
 
 # prepare gpg settings for sbt
-echo <<EOF >> gpg.sbt
+cat << EOF > gpg.sbt
 import com.typesafe.sbt.pgp.PgpKeys._
 pgpSigningKey in Global := Some(0x2CED17AB2B6D6F37l)
 pgpPassphrase in Global := Some(sys.env("GPG_PASSPHRASE").toArray)
@@ -129,7 +129,7 @@ EOF
 
 # prepare bintray settings
 mkdir -p "$HOME"/.bintray
-echo <<EOF >> "$HOME"/.bintray/.credentials
+cat << EOF > "$HOME"/.bintray/.credentials
 realm = Bintray API Realm
 host = api.bintray.com
 user = jodersky
