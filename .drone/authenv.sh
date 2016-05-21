@@ -7,7 +7,6 @@
 set -e
 
 echo "Preparing authenticated environment"
-echo $$
 
 if [ -z "CI" ]; then
     echo "This script should be run in a CI environment. Aborting."
