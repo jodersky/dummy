@@ -6,6 +6,7 @@
 
 set -e
 
+echo "Preparing authenticated environment"
 if [ -z "$GPG_SSB_ENC" ] || [ -z "$BINTRAY_KEY" ]; then
     echo "Secrets not defined!" >&2
     exit 1
@@ -20,11 +21,10 @@ fi
 # although the key is encrypted as a drone secret, it must also be encrypted
 # with a passphrase since gpg2 does not allow exporting keys with empty passwords
 # https://bugs.gnupg.org/gnupg/issue2070
-echo "Extracting and importing signing key"
 echo "$GPG_SSB_ENC" | base64 -w 0 -d | gpg --batch --import
+echo "Imported signing key"
 
 # prepare gpg settings for sbt
-echo "Setting up sbt-pgp"
 cat << EOF > "gpg.sbt"
 import com.typesafe.sbt.pgp.PgpKeys._
 gpgCommand := "/usr/bin/gpg"
@@ -32,9 +32,9 @@ useGpg in Global := true
 pgpSigningKey in Global := Some(0x2CED17AB2B6D6F37l)
 pgpPassphrase in Global := Some("0000000000".toCharArray)
 EOF
+echo "sbt-pgp ready"
 
 # prepare bintray settings
-echo "Setting up sbt-bintray"
 mkdir -p "$HOME/.bintray"
 cat << EOF > "$HOME/.bintray/.credentials"
 realm = Bintray API Realm
@@ -42,3 +42,4 @@ host = api.bintray.com
 user = jodersky
 password = "$BINTRAY_KEY"
 EOF
+echo "sbt-bintray ready"
