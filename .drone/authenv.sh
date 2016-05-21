@@ -23,7 +23,7 @@ echo "$GPG_SSB_ENC" | base64 -w 0 -d | gpg --batch --import
 
 # prepare gpg settings for sbt
 echo "Setting up sbt-pgp"
-cat << EOF > gpg.sbt
+cat << EOF > "$DRONE_DIR/gpg.sbt"
 import com.typesafe.sbt.pgp.PgpKeys._
 gpgCommand := "/usr/bin/gpg"
 useGpg in Global := true
