@@ -21,12 +21,13 @@ echo "$NEWLINE"
 echo "Extracting and importing signing key"
 echo "$GPG_SSB_ENC" | base64 -w 0 -d | gpg --batch --import
 
+whoami
 ls -la "$DRONE_DIR"
-tree "$DRONE_DIR"
+echo "$HOME"
 
 # prepare gpg settings for sbt
 echo "Setting up sbt-pgp"
-cat << EOF > "$DRONE_DIR/gpg.sbt"
+cat << EOF > "$HOME/gpg.sbt"
 import com.typesafe.sbt.pgp.PgpKeys._
 gpgCommand := "/usr/bin/gpg"
 useGpg in Global := true
@@ -36,8 +37,8 @@ EOF
 
 # prepare bintray settings
 echo "Setting up sbt-bintray"
-mkdir -p "$HOME"/.bintray
-cat << EOF > "$HOME"/.bintray/.credentials
+mkdir -p "$HOME/.bintray"
+cat << EOF > "$HOME/.bintray/.credentials"
 realm = Bintray API Realm
 host = api.bintray.com
 user = jodersky
