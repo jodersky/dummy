@@ -10,6 +10,7 @@ build:
       event: push
       success: true
     environment:
+      SECURE: "$$SECURE"
       GPG_SSB_ENC: "$$GPG_SSB_ENC"
       BINTRAY_KEY: "$$BINTRAY_KEY"
     commands:

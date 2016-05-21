@@ -7,9 +7,15 @@
 set -e
 
 echo "Preparing authenticated environment"
-echo "ssb: $GPG_SSB"
-if [ -z "$GPG_SSB" ] || [ -z "$BINTRAY_KEY" ]; then
-    echo "Secrets not defined!" >&2
+echo $$
+
+if [ -z "CI" ]; then
+    echo "This script should be run in a CI environment. Aborting."
+    exit 1
+fi
+
+if [ -z "$SECURE" ] || [ "$SECURE" = "\$\$SECURE" ]; then
+    echo "Secrets not defined. Aborting." >&2
     exit 1
 fi
 
