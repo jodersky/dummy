@@ -18,16 +18,17 @@ echo "$NEWLINE"
 # although the key is encrypted as a drone secret, it must also be encrypted
 # with a passphrase since gpg2 does not allow exporting keys with empty passwords
 # https://bugs.gnupg.org/gnupg/issue2070
-echo "Importing signing key"
-echo "$GPG_SSB" | gpg --batch --import
+echo "Extracting and importing signing key"
+echo "$GPG_SSB_ENC" | base64 -w 0 -d | gpg --batch --import
 
 # prepare gpg settings for sbt
 echo "Setting up sbt-pgp"
 cat << EOF > gpg.sbt
 import com.typesafe.sbt.pgp.PgpKeys._
+gpgCommand := "/usr/bin/gpg"
+useGpg in Global := true
 pgpSigningKey in Global := Some(0x2CED17AB2B6D6F37l)
 pgpPassphrase in Global := Some("0000000000".toCharArray)
-useGpg in Global := true
 EOF
 
 # prepare bintray settings

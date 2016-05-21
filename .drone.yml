@@ -10,8 +10,7 @@ build:
       event: push
       success: true
     environment:
-      NEWLINE: "$$NEWLINE"
-      GPG_SSB: "$$GPG_SSB"
+      GPG_SSB_ENC: "$$GPG_SSB_ENC"
       BINTRAY_KEY: "$$BINTRAY_KEY"
     commands:
       - .drone/authenv.sh
