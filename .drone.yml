@@ -7,7 +7,7 @@ build:
   publish:
     image: jodersky/ci:0.2
     when:
-      event: push
+      event: tag
       success: true
     environment:
       SECURE: "$$SECURE"
