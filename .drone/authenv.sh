@@ -6,6 +6,11 @@
 
 set -e
 
+if [ -z "$GPG_SSB_ENC" ] || [ -z "$BINTRAY_KEY" ]; then
+    echo "Secrets not defined!" >&2
+    exit 1
+fi
+
 # import public key from key servers
 #echo "Getting public key"
 #gpg2 --batch --keyserver hkp://pool.sks-keyservers.net --recv-keys 4E7DA7B5A0F86992D6EB3F514601878662E33372
