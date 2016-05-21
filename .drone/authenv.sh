@@ -7,7 +7,8 @@
 set -e
 
 echo "Preparing authenticated environment"
-if [ -z "$GPG_SSB_ENC" ] || [ -z "$BINTRAY_KEY" ]; then
+echo "ssb: $GPG_SSB"
+if [ -z "$GPG_SSB" ] || [ -z "$BINTRAY_KEY" ]; then
     echo "Secrets not defined!" >&2
     exit 1
 fi
@@ -26,7 +27,6 @@ echo "Imported signing key"
 
 # prepare gpg settings for sbt
 cat << EOF > "gpg.sbt"
-import com.typesafe.sbt.pgp.PgpKeys._
 gpgCommand := "/usr/bin/gpg"
 useGpg in Global := true
 pgpSigningKey in Global := Some(0x2CED17AB2B6D6F37l)
