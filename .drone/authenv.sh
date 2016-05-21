@@ -18,13 +18,9 @@ set -e
 echo "Extracting and importing signing key"
 echo "$GPG_SSB_ENC" | base64 -w 0 -d | gpg --batch --import
 
-echo -n "I am: " && whoami
-echo "currently in $PWD"
-ls -la "$PWD"
-
 # prepare gpg settings for sbt
 echo "Setting up sbt-pgp"
-cat << EOF > "$HOME/gpg.sbt"
+cat << EOF > "gpg.sbt"
 import com.typesafe.sbt.pgp.PgpKeys._
 gpgCommand := "/usr/bin/gpg"
 useGpg in Global := true
