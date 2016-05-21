@@ -16,3 +16,4 @@ build:
     commands:
       - .drone/authenv.sh
       - sbt +publishSigned
+      - exho "done"
