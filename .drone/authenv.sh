@@ -6,9 +6,6 @@
 
 set -e
 
-echo "the newline is:"
-echo "$NEWLINE"
-
 # import public key from key servers
 #echo "Getting public key"
 #gpg2 --batch --keyserver hkp://pool.sks-keyservers.net --recv-keys 4E7DA7B5A0F86992D6EB3F514601878662E33372
@@ -21,9 +18,9 @@ echo "$NEWLINE"
 echo "Extracting and importing signing key"
 echo "$GPG_SSB_ENC" | base64 -w 0 -d | gpg --batch --import
 
-whoami
-ls -la "$DRONE_DIR"
-echo "$HOME"
+echo -n "I am: " && whoami
+echo "currently in $PWD"
+ls -la "$PWD"
 
 # prepare gpg settings for sbt
 echo "Setting up sbt-pgp"
