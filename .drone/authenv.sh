@@ -47,3 +47,5 @@ user = jodersky
 password = "$BINTRAY_KEY"
 EOF
 echo "sbt-bintray ready"
+
+echo "Environment ready"
