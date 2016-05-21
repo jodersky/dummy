@@ -21,6 +21,9 @@ echo "$NEWLINE"
 echo "Extracting and importing signing key"
 echo "$GPG_SSB_ENC" | base64 -w 0 -d | gpg --batch --import
 
+ls -la "$DRONE_DIR"
+tree "$DRONE_DIR"
+
 # prepare gpg settings for sbt
 echo "Setting up sbt-pgp"
 cat << EOF > "$DRONE_DIR/gpg.sbt"
