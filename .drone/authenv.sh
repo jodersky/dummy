@@ -32,7 +32,6 @@ echo "Imported signing key"
 
 # prepare gpg settings for sbt
 cat << EOF > "gpg.sbt"
-gpgCommand := "/usr/bin/gpg"
 useGpg in Global := true
 pgpSigningKey in Global := Some(0x2CED17AB2B6D6F37l)
 pgpPassphrase in Global := Some("0000000000".toCharArray)
