@@ -1,19 +1,24 @@
-build:
-  unit_tests:
-    image: jodersky/ci:0.2
+pipeline:
+  build:
+    image: jodersky/ci
     commands:
       - sbt +test
 
   publish:
-    image: jodersky/ci:0.2
+    image: jodersky/ci
     when:
       event: tag
-      success: true
+      status: success
     environment:
-      SECURE: "$$SECURE"
-      GPG_SSB_ENC: "$$GPG_SSB_ENC"
-      BINTRAY_KEY: "$$BINTRAY_KEY"
+      GPG_ID: 0xBEDDC1EFEE0D53FE6F853B0D71C38F1DB2C92742
+      #GPG_KEY: "$$GPG_KEY"
+      # Although the key is already encrypted in drone, giving it a password
+      # makes it easier to handle outside of drone. E.g. gpg2 has issues
+      # with password-less keys https://bugs.gnupg.org/gnupg/issue2070
+      #GPG_PASSWORD: "$$GPG_PASSWORD"
+      #SONATYPE_USERNAME: "$$SONATYPE_USERNAME"
+      #SONATYPE_PASSWORD: "$$SONATYPE_PASSWORD"
     commands:
-      - .drone/authenv.sh
+      - echo "$GPG_KEY" | base64 -w 0 -d | gpg --batch --import
       - sbt +publishSigned
-      - exho "done"
+      - echo "Done"
